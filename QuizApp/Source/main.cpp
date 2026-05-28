@@ -1,5 +1,7 @@
 #include <iostream>
-#include <windows.h>
+#include <thread>
+#include <future>
+#include <chrono>
 
 //Typing Animation
 void TypeToScreen(std::string Input, int Time, int Wait, bool EndLine) //Take input string, wait time between letters, wait time before finishing, and wether or not to end the lin
@@ -9,11 +11,11 @@ void TypeToScreen(std::string Input, int Time, int Wait, bool EndLine) //Take in
     while (Input[x] != '\0')
     {
         std::cout << Input[x];
-        Sleep(Time);
+        std::this_thread::sleep_for(std::chrono::milliseconds(Time));
         x++;
     };
-    //Wait the wait time?
-    Sleep(Wait);
+    //Wait the wait time
+    std::this_thread::sleep_for(std::chrono::milliseconds(Wait));
     //If not end line then exit
     if (!EndLine)
         return;
@@ -29,14 +31,15 @@ int main() {
     std::string name;
 
     //Use type animation to write a welcome
-    TypeToScreen("Hello, Welcome to this quiz", 50, 1000, true);
+    TypeToScreen("Hello, Welcome to this quiz", 25, 500, true);
 
     //Ask for name
-    TypeToScreen("What is your name?", 50, 1000, true);
+    TypeToScreen("What is your name?", 25, 500, true);
+    std::cout << ">";
     //Store their response in a var
     std::cin >> name;
     //Say hello
-    TypeToScreen("Hello " + name, 50, 1000, true);
+    TypeToScreen("Hello " + name, 25, 500, false);
 
     return 0;
 }

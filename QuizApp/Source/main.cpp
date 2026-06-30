@@ -5,47 +5,46 @@
 //Constants used throughout the program
 const int MARK_PER_QUESTION = 10;
 const int TOTAL_QUESTIONS = 5;
+const int PASS_MARK = 50;
 
 char getAnswer()
 {
-    char answer;
-    
-    int thing;
+    char userAnswer;
 
     std::cout << "Your Answer : ";
-    std::cin >> answer;
+    std::cin >> userAnswer;
 
-    //Convert answer to lowercase so A and a are treated the same
-    answer = std::tolower(answer);
+    //Convert answer to lowercase
+    userAnswer = std::tolower(userAnswer);
 
     //Keep asking until a valid answer is entered
-    while (answer != 'a' && answer != 'b' && answer != 'c' && answer != 'd')
+    while (userAnswer != 'a' && userAnswer != 'b' && userAnswer != 'c' && userAnswer != 'd')
     {
         std::cout << "Invalid input! Please enter A, B, C or D.\n";
         std::cout << "Your Answer : ";
-        std::cin >> answer;
-        answer = std::tolower(answer);
+        std::cin >> userAnswer;
+        userAnswer = std::tolower(userAnswer);
     }
 
-    return answer;
+    return userAnswer;
 }
 
 int main()
 {
     //Create empty variable for the score and player name.
-    int score = 0;
-    std::string Playername;
+    int playerScore = 0;
+    std::string playerName;
 
-    //Ask the user for their name and store response in Playername variable
+    //Ask the user for their name and store response in playerName variable
     std::cout << "Enter Your name : ";
-    std::getline(std::cin, Playername);
+    std::getline(std::cin, playerName);
 
     //If no name is entered, keep asking until one is entered
-    while (Playername.empty())
+    while (playerName.empty() || playerName == " ")
     {
         std::cout << "Name cannot be empty.\n";
         std::cout << "Enter Your name : ";
-        std::getline(std::cin, Playername);
+        std::getline(std::cin, playerName);
     }
 
     //Welcome them to quiz
@@ -112,7 +111,7 @@ int main()
             std::cout << "Correct!\n";
 
             //Add marks to the score
-            score = score + MARK_PER_QUESTION;
+            playerScore = playerScore + MARK_PER_QUESTION;
         }
         else
         {
@@ -127,12 +126,12 @@ int main()
     int maximumScore = TOTAL_QUESTIONS * MARK_PER_QUESTION;
 
     //Calculate the percentage
-    int percentage = (score * 100) / maximumScore;
+    int percentage = (playerScore * 100) / maximumScore;
 
     //Display the final score
-    std::cout << Playername
+    std::cout << playerName
               << " Your Final Score is : "
-              << score
+              << playerScore
               << " out of "
               << maximumScore
               << "\n";
@@ -143,17 +142,13 @@ int main()
               << "%\n";
 
     //Give feedback based on the score
-    if (percentage >= 80)
+    if (percentage >= PASS_MARK)
     {
-        std::cout << "Excellent work!\n";
-    }
-    else if (percentage >= 60)
-    {
-        std::cout << "Good job!\n";
+        std::cout << "You passed, Excellent work!\n";
     }
     else
     {
-        std::cout << "Keep practising!\n";
+        std::cout << "You failed, Keep practising!\n";
     }
 
     //If function reaches here then exit with code 0 (success)
